@@ -52,7 +52,8 @@ int main(int argc, char** argv) {
     fputs("all:\n", f);
     fputs("\tmkdir -p $(BUILD_DIR)\n", f);
 
-    fprintf(f, "\t$(CC) $(SRCS) -Wall -Wextra -I$(INCLUDE_DIR) %s-o $(BUILD_DIR)/%s", 
+    /* %s-o %s -o. ensures that the arguments are properly concatenated */
+    fprintf(f, "\t$(CC) $(SRCS) -Wall -Wextra -I$(INCLUDE_DIR) %s -o $(BUILD_DIR)/%s", 
         (argc > 2 && strcmp(argv[2], "--clang") != 0) ? "`pkg-config --libs --cflags $(LIBS)` " : 
         (argc > 2) ? argv[3] : 
         "", 
